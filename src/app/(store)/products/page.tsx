@@ -13,7 +13,12 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default async function AllProductsPage() {
-	const products = await Commerce.productBrowse({ first: 100 });
+	let products: Commerce.MappedProduct[] = [];
+	try {
+		products = await Commerce.productBrowse({ first: 100 });
+	} catch (e) {
+		products = [];
+	}
 	const t = await getTranslations("/products.page");
 
 	return (

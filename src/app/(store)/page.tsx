@@ -13,7 +13,12 @@ export const metadata = {
 } satisfies Metadata;
 
 export default async function Home() {
-	const products = await Commerce.productBrowse({ first: 6 });
+	let products: Commerce.MappedProduct[] = [];
+	try {
+		products = await Commerce.productBrowse({ first: 6 });
+	} catch (e) {
+		products = [];
+	}
 	const t = await getTranslations("/");
 
 	return (
